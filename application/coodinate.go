@@ -1,12 +1,14 @@
 package application
 
 type Coordinate struct {
+	City      string
 	Latitude  string
 	Longitude string
 }
 
-func NewCoordinate(lat, lng string) *Coordinate {
+func NewCoordinate(city, lat, lng string) *Coordinate {
 	return &Coordinate{
+		City:      city,
 		Latitude:  lat,
 		Longitude: lng,
 	}

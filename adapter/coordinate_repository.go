@@ -11,20 +11,20 @@ import (
 )
 
 type coordinateRepository struct {
-	cfg *configs.Config
 }
 
 type Output struct {
-	Lat string `json:"lat"`
-	Lng string `json:"lng"`
+	City string `json:"city"`
+	Lat  string `json:"lat"`
+	Lng  string `json:"lng"`
 }
 
-func NewCoordinateRepository(config *configs.Config) application.ICoordinateRepository {
-	return &coordinateRepository{cfg: config}
+func NewCoordinateRepository() application.ICoordinateRepository {
+	return &coordinateRepository{}
 }
 
 func (c *coordinateRepository) GetByCep(ctx context.Context, cep string) (*application.Coordinate, error) {
-	url := fmt.Sprintf("%s/{cep}", c.cfg.CepApiUrl)
+	url := fmt.Sprintf("%s/{cep}", configs.Cfg.CepApiUrl)
 
 	match, _ := regexp.MatchString("[0-9]{8}", cep)
 
@@ -51,6 +51,6 @@ func (c *coordinateRepository) GetByCep(ctx context.Context, cep string) (*appli
 		return nil, application.ErrCepInvalid
 	}
 
-	cord := application.NewCoordinate(r.Result().(*Output).Lat, r.Result().(*Output).Lng)
+	cord := application.NewCoordinate(r.Result().(*Output).City, r.Result().(*Output).Lat, r.Result().(*Output).Lng)
 	return cord, nil
 }
