@@ -9,17 +9,16 @@ processors:
 exporters:
   prometheus:
     endpoint: 0.0.0.0:8889
-  otlp:
-    endpoint: jaeger-all-in-one:4317
-    tls:
-      insecure: true
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+    format: proto
 
 service:
   pipelines:
     traces:
       receivers: [ otlp ]
       processors: [ batch ]
-      exporters: [ otlp ]
+      exporters: [ zipkin ]
     metrics:
       receivers: [ otlp ]
       processors: [ batch ]
