@@ -16,11 +16,11 @@ type WeatherApiOutput struct {
 }
 
 type weatherRepository struct {
-	cfg *configs.Config
 }
 
-func NewWeatherRepository(cfg *configs.Config) application.IWeatherRepository {
-	return &weatherRepository{cfg: cfg}
+func NewWeatherRepository() application.IWeatherRepository {
+
+	return &weatherRepository{}
 }
 
 func (w *weatherRepository) GetTemperature(ctx context.Context, coordinate *application.Coordinate) (*application.Weather, error) {
@@ -29,11 +29,11 @@ func (w *weatherRepository) GetTemperature(ctx context.Context, coordinate *appl
 		SetContext(ctx).
 		SetHeader("Accept", "application/json").
 		SetQueryParams(map[string]string{
-			"key": w.cfg.WeatherApiKey,
+			"key": configs.Cfg.WeatherApiKey,
 			"q":   fmt.Sprintf("%s,%s", coordinate.Latitude, coordinate.Longitude),
 		}).
 		SetResult(&WeatherApiOutput{}).
-		Get(w.cfg.WeatherApiUrl)
+		Get(configs.Cfg.WeatherApiUrl)
 	if e != nil {
 		return nil, e
 	}
