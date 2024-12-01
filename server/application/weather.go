@@ -1,6 +1,8 @@
 package application
 
-import "github.com/rgoncalvesrr/fullcycle-labs-otel/pkg/weather"
+import (
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/pkg/weather"
+)
 
 type Weather struct {
 	celsius    weather.Celsius

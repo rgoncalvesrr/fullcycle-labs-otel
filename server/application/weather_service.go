@@ -3,6 +3,7 @@ package application
 import "context"
 
 type WeatherOutput struct {
+	City       string  `json:"city"`
 	Celsius    float64 `json:"temp_C"`
 	Fahrenheit float64 `json:"temp_F"`
 	Kelvin     float64 `json:"temp_k"`
@@ -43,6 +44,7 @@ func (w weatherService) GetTemperature(ctx context.Context, cep string) (*Weathe
 	}
 
 	return &WeatherOutput{
+		City:       c.City,
 		Celsius:    t.Celsius(),
 		Kelvin:     t.Kelvin(),
 		Fahrenheit: t.Fahrenheit(),

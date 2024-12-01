@@ -1,7 +1,7 @@
 package configs_test
 
 import (
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/configs"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/client/configs"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

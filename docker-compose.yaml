@@ -48,17 +48,17 @@ services:
       - zipkin
 
   orchestrator-api:
-    container_name: orchestrator-api
-    hostname: orchestrator-api
+    container_name: orchestrator-api-api
+    hostname: orchestrator-api-api
     restart: always
     image: rgoncalvesr/orchestrator-api:latest
     build:
       dockerfile: Dockerfile
       context: .
       tags:
-        - rgoncalvesr/orchestrator-api:latest
+        - rgoncalvesr/orchestrator-api-api:latest
       args:
-        - TARGET_API=orchestrator-api
+        - TARGET_API=orchestrator-api-api
         - API_PORT=8081
     ports:
       - 8081:8081
@@ -70,17 +70,17 @@ services:
       - weather-api-otel
 
   input-api:
-    container_name: input-api
-    hostname: input-api
+    container_name: input-api-api
+    hostname: input-api-api
     restart: always
     image: rgoncalvesr/input-api:latest
     build:
       dockerfile: Dockerfile
       context: .
       tags:
-        - rgoncalvesr/input-api:latest
+        - rgoncalvesr/input-api-api:latest
       args:
-        - TARGET_API=input-api
+        - TARGET_API=input-api-api
         - API_PORT=8080
     ports:
       - 8080:8080

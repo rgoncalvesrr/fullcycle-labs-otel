@@ -2,7 +2,7 @@ package adapter_test
 
 import (
 	"context"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/adapter"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/adapter"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

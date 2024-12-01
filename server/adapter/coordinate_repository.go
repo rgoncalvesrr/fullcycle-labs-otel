@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/application"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/configs"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/application"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/configs"
 	"net/http"
 	"regexp"
 )
