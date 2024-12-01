@@ -6,18 +6,23 @@ import (
 )
 
 type Config struct {
-	WeatherApiKey string `mapstructure:"WEATHER_API_KEY"`
-	WeatherApiUrl string `mapstructure:"WEATHER_API_URL"`
-	CepApiUrl     string `mapstructure:"CEP_API_URL"`
+	WeatherApiKey              string `mapstructure:"WEATHER_API_KEY"`
+	WeatherApiUrl              string `mapstructure:"WEATHER_API_URL"`
+	CepApiUrl                  string `mapstructure:"CEP_API_URL"`
+	InputApiHttpPort           string `mapstructure:"INPUT_API_HTTP_PORT"`
+	InputApiOtelServiceName    string `mapstructure:"INPUT_API_OTEL_SERVICE_NAME"`
+	OrchestratorApiPort        string `mapstructure:"ORCHESTRATOR_API_PORT"`
+	OrchestratorApiHost        string `mapstructure:"ORCHESTRATOR_API_HOST"`
+	OrchestratorApiServiceName string `mapstructure:"ORCHESTRATOR_API_SERVICE_NAME"`
 }
 
-func NewConfig(path string) *Config {
-	//cfgFile := filepath.Join(path, ".env")
+var Cfg *Config
+
+func init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("..")
 	viper.AddConfigPath("../..")
-	viper.AddConfigPath(path)
-	viper.SetConfigName(".")
+	viper.SetConfigName("app")
 	viper.SetConfigType("env")
 	viper.AutomaticEnv()
 
@@ -25,15 +30,11 @@ func NewConfig(path string) *Config {
 
 	e := viper.ReadInConfig()
 	if e != nil {
-		log.Fatal("Can't find the file .env : ", e)
+		log.Fatal("Can't find the file app.env : ", e)
 	}
 
-	var result Config
-
-	e = viper.Unmarshal(&result)
+	e = viper.Unmarshal(&Cfg)
 	if e != nil {
-		log.Fatal("Can't unmarshal the file .env : ", e)
+		log.Fatal("Can't unmarshal the file app.env : ", e)
 	}
-
-	return &result
 }
