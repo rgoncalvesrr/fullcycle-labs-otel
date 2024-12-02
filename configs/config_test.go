@@ -1,7 +1,7 @@
 package configs_test
 
 import (
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/client/configs"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/configs"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,4 +9,5 @@ import (
 func TestNewConfig(t *testing.T) {
 	c := configs.Cfg
 	assert.NotNil(t, c)
+	assert.Equal(t, configs.Cfg.WeatherApiKey, "")
 }

@@ -1,8 +1,8 @@
 package application_test
 
 import (
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/application"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/pkg/weather"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/internal/application"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/pkg/weather"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

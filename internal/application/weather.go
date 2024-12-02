@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/pkg/weather"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/pkg/weather"
 )
 
 type Weather struct {

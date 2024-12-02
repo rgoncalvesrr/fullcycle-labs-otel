@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/application"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/configs"
-	"github.com/rgoncalvesrr/fullcycle-labs-otel/server/pkg/weather"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/configs"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/internal/application"
+	"github.com/rgoncalvesrr/fullcycle-labs-otel/pkg/weather"
+	"go.opentelemetry.io/otel/trace"
 )
 
 type WeatherApiOutput struct {
@@ -16,14 +17,19 @@ type WeatherApiOutput struct {
 }
 
 type weatherRepository struct {
+	tracer trace.Tracer
 }
 
-func NewWeatherRepository() application.IWeatherRepository {
-
-	return &weatherRepository{}
+func NewWeatherRepository(tracer trace.Tracer) application.IWeatherRepository {
+	return &weatherRepository{
+		tracer: tracer,
+	}
 }
 
 func (w *weatherRepository) GetTemperature(ctx context.Context, coordinate *application.Coordinate) (*application.Weather, error) {
+	ctx, span := w.tracer.Start(ctx, "get-external-weather")
+	defer span.End()
+
 	client := resty.New()
 	r, e := client.R().
 		SetContext(ctx).
