@@ -29,7 +29,7 @@ func NewWeatherService(
 }
 
 func (w weatherService) GetTemperature(ctx context.Context, cep string) (*WeatherOutput, error) {
-	// Tenta obter a latitude e logitude
+	// Tenta obter a latitude e longitude
 	c, e := w.coordinateRepository.GetByCep(ctx, cep)
 
 	if e != nil {

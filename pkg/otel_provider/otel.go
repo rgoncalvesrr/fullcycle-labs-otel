@@ -3,6 +3,7 @@ package otel_provider
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/credentials/insecure"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -10,11 +11,9 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	"google.golang.org/grpc"
 )
 
 // InitProvider configura a comunicação com Opentelemetry para ser usado pela aplicação.
@@ -38,11 +37,9 @@ func InitProvider(serviceName, collectorURL string) (func(context.Context) error
 	defer cancel()
 
 	// Abrindo canal de comunicação com o coletor com contexto de cancelamento por tempo limite.
-	conn, err := grpc.DialContext(
-		ctx,
-		collectorURL,
+	conn, err := grpc.NewClient(collectorURL,
+		// Note the use of insecure transport here. TLS is recommended in production.
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create gRPC connection to collector: %w", err)
